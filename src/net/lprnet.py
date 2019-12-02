@@ -131,16 +131,11 @@ def train_model(num_channels, label_len, b, img_size):
     x1 = concatenate_block(x1)
     x2 = concatenate_block(x2)
     x3 = concatenate_block(x3, ksize = [1, 2, 1, 1], strides = [1,2,1,1])
-
-
     # Layers concatenation 
-
     x = tf.concat([x1, x2, x3], 3)
     x = conv(x, x.get_shape().as_list()[3], NUM_CHARS+1, ksize=(1,1))
     logits = tf.reduce_mean(x, axis=2)
-
     return logits, inputs, targets, seq_len
-
 
 def main():
     confile = load_config()
