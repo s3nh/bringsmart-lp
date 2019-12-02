@@ -1,0 +1,19 @@
+BASE:
+  NET:
+    DESC: "LPRNet parameters"
+    NUM_EPOCHS: 300
+    INITIAL_LEARNING_RATE: 1e-3
+    DECAY_STEPS: 2000
+    LEARNING_RATE_DECAY_FACTOR: 0.9
+    MOMENTUM: 0.9
+    REPORT_STEPS: 5000
+    BATCH_SIZE: 50 
+    TRAIN_SIZE: 1070
+    BATCHES: 22 
+  FILES:
+    TRAIN_PATH: 'data/train'
+    TEST_PATH: 'data/test'
+    NUM_CHANNELS: 3
+    LABEL_LEN: 5
+
+  
