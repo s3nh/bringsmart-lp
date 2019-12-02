@@ -8,6 +8,27 @@ import yaml
 
 CONFIG_PATH = 'config/config.yaml'
 
+CHARS = ['0', '1', '2', '3', '4', '5', 
+         '6', '7', '8', '9','0', 
+         'a', 'b', 'c', 'd', 'e', 
+         'f', 'g', 'h', 'i', 'j', 
+         'k', 'l', 'm', 'n', 'o', 
+         'p', 'q', 'r', 's', 't', 
+         'u', 'v', 'w', 'x', 'y', 'z']
+
+CHARS_DICT = {char : i for i, char in enumerate(CHARS)}
+NUM_CHARS = len(CHARS_DICT)
+
+
+# Label encoding 
+
+def encode_label(s):
+    label = np.zeros([len(s)])
+    for i, c in enumerate(s):
+        label[i] =  CHARS_DICT[s]
+    return label
+
+
 def load_config(config_path = CONFIG_PATH):
     assert os.path.exists(CONFIG_PATH)
     with open(config_path, 'r') as confile:
