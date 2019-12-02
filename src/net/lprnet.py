@@ -114,22 +114,32 @@ def train_model(num_channels, label_len, b, img_size):
     x = tf.nn.relu(x)
     cx = tf.reduce_mean(tf.square(x))
     x = tf.div(x, cx) 
-
+    """
     x1 = tf.nn.avg_pool(inputs, 
     ksize = [1, 4, 1, 1], 
     strides = [1, 4, 1, 1],
     padding = 'SAME')
     cx1 = tf.reduce_mean(tf.square(x1))
     x1 = tf.div(x1, cx1)
-
-
-    tf2 = tf.nn.avg_pool(inputs, 
+    x2 = tf.nn.avg_pool(inputs, 
     ksize = [1, 4, 1, 1], 
     strides = [1, 4, 1, 1], 
     padding =  'SAME')
     cx2 =  tf.reduce_mean(tf.square(x2))
     x2 = tf.div(x2, cx2)
+    """
+    x1 = concatenate_block(x1)
+    x2 = concatenate_block(x2)
+    x3 = concatenate_block(x3, ksize = [1, 2, 1, 1], strides = [1,2,1,1])
 
+
+    # Layers concatenation 
+
+    x = tf.concat([x1, x2, x3], 3)
+    x = conv(x, x.get_shape().as_list()[3], NUM_CHARS+1, ksize=(1,1))
+    logits = tf.reduce_mean(x, axis=2)
+
+    return logits, inputs, targets, seq_len
 
 
 def main():
