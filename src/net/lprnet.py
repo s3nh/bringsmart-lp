@@ -28,7 +28,6 @@ def encode_label(s):
         label[i] =  CHARS_DICT[s]
     return label
 
-
 def load_config(config_path = CONFIG_PATH):
     assert os.path.exists(CONFIG_PATH)
     with open(config_path, 'r') as confile:
@@ -157,6 +156,23 @@ def train_model(num_channels, label_len, b, img_size):
     x = conv(x, x.get_shape().as_list()[3], NUM_CHARS+1, ksize=(1,1))
     logits = tf.reduce_mean(x, axis=2)
     return logits, inputs, targets, seq_len
+
+def train(a):
+
+    # Train generator 
+
+
+
+    # Validation 
+
+    global_step = tf.Variable(0, trainable = False)
+    learning_rate = tf.train.exponential_decay(INITIAL_LEARNING_RATE, 
+                    global_step, 
+                    DECAY_STEPS, 
+                    LEARNING_RATE_DECAY_FACTOR, 
+                    staircase=True)
+    logits, inputs, targets, seq_len = train_model()
+
 
 def main():
     confile = load_config()
